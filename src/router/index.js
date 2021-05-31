@@ -4,26 +4,34 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 const myFound = () => import ('views/data/myFound/MyFound') ;
+const kkStyle = () => import('views/data/myFound/menu/KkStyle');
+const kkSongs = () => import('views/data/myFound/menu/KkSongs');
+const kkAnchor = () => import('views/data/myFound/menu/KkAnchor');
+const kkList = () => import('views/data/myFound/menu/KkList');
+const kkSinger = () => import('views/data/myFound/menu/KkSinger');
+const kkNewSongs = () => import('views/data/myFound/menu/KkNewSongs');
+
 const myVideo = () => import ('views/data/myVideo/MyVideo') ;
 const myFriends = () => import ('views/data/myFriends/MyFriends') ;
 const myLives = () => import ('views/data/myLives/MyLives') ;
 const mySelf = () => import ('views/data/mySelf/MySelf') ;
-// const found = () => import('views/data/mainComps/Found');
 
 const routes = [
   {
     path: '',
-    redirect: '/found',
+    redirect: '/found/kkstyle',
   },
   {
     path: '/found',
     component: myFound,
-    // children: [
-    //   {
-    //     path: 'found',
-    //     component: found
-    //   }
-    // ]
+    children: [
+      { path: 'kkstyle', component: kkStyle},
+      { path: 'kksongs', component: kkSongs},
+      { path: 'kkanchor', component: kkAnchor},
+      { path: 'kklist', component: kkList},
+      { path: 'kksinger', component: kkSinger},
+      { path: 'kknewsongs', component: kkNewSongs},
+    ]
   },
   {
     path: '/video',

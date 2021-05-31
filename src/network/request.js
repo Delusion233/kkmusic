@@ -15,7 +15,7 @@ export function request(config){
   })
   //响应拦截
   baseUrl.interceptors.response.use(res => {
-    return res
+    return res.data
   }, err => {
     console.log(err);
   })

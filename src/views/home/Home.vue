@@ -1,8 +1,10 @@
 <template>
   <div class="home">
     <Header/>
-    <Aside/>
-    <Main/>
+    <div class="container">
+      <Aside/>
+      <Main/>
+    </div>
     <Footer/>
   </div>
 </template>
@@ -23,7 +25,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .home{
   width: 1200px;
   margin: 0 auto;
@@ -32,5 +34,9 @@ export default {
   top: 50%;
   transform: translateY(-50%);
   box-shadow: 0 0 20px rgb(0 0 0 / 20%);
+}
+.container{
+  width: 100%;
+  height: 550px;
 }
 </style>

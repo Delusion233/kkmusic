@@ -4,7 +4,7 @@
       <div class="base" v-for="(item,index) in myBase" 
       :key="new Date().getTime()+index"
       @click="myBaseChose(index,item.path)"
-      :class="{'isChoose1':myBaseIndex===index}">
+      :class="{'isChoose1': item.path.split('/')[1] === $route.path.split('/')[1] }">
         {{item.txt}}
       </div>
       <p class="title">我的音乐</p>
@@ -14,7 +14,7 @@
       :class="{'isChoose2':myMusicIndex===index}">
         <i :class="item.i"></i><span class="txt">{{item.txt}}</span>
       </div>
-      <el-menu>
+      <el-menu class="menu">
         <el-submenu index="1">
           <template slot="title">
             <i></i>创建的歌单
@@ -42,7 +42,7 @@ export default {
   data () {
     return {
       myBase:[
-        {path:'/found',txt:'发现音乐'},
+        {path:'/found/kkstyle',txt:'发现音乐'},
         {path:'/video',txt:'视频'},
         {path:'/friends',txt:'朋友'},
         {path:'/lives',txt:'直播'},
@@ -78,6 +78,11 @@ export default {
       this.myMusicIndex = -1;
       this.myCreateIndex = index;
     }
+  },
+  filters: {
+    getPath(path){
+      return path.split('/')[1]
+    }
   }
 }
 </script>
@@ -85,23 +90,24 @@ export default {
 <style scoped>
 .aside{
   float: left;
-  width: 180px;
-  height: 480px;
+  width: 200px;
+  height: 530px;
   padding: 10px;
   text-align: left;
   overflow: hidden;
   box-shadow: 1px 0 0 rgb(0 0 0 / 10%);
 }
 .contanier{
-  width: 180px;
+  width: 190px;
 }
 .aside:hover{
   overflow-y: auto;
 }
 .base{
-  padding: 8px;
+  padding: 10px 8px;
   color: rgba(0, 0, 0, 0.7);
   font-size: 16px;
+  margin-top: 2px;
 }
 .base:hover{
   cursor: pointer;
@@ -114,6 +120,8 @@ export default {
 .title{
   color: rgba(0,0,0,.3);
   font-size: 14px;
+  padding-top: 20px;
+  padding-bottom: 10px;
 }
 .isChoose1{
   color: rgba(0, 0, 0, 1);
@@ -130,7 +138,7 @@ export default {
   border: 0px!important;
 }
 .el-submenu__title{
-  padding: 0!important;
+  padding: 20px 0 10px 0!important;
   color: rgba(0,0,0,.3)!important;
 }
 .el-submenu__title:hover{background-color: rgba(0, 0, 0, 0)!important;}
@@ -141,12 +149,13 @@ export default {
   padding: 0!important;
 }
 .el-submenu .el-menu-item{
-  padding: 8px!important;
+  padding: 10px 8px!important;
   color: rgba(0, 0, 0, 0.7)!important;
   font-size: 16px!important;
   height: auto!important;
   line-height: normal!important;
   min-width: 0px!important;
+  margin-top: 2px;
 }
 .el-menu-item:focus, .el-menu-item:hover {
   outline: 0!important;
@@ -160,5 +169,9 @@ export default {
   margin-right: 0!important;
   width: auto!important;
   text-align: center!important;
+}
+.menu .el-submenu__title{
+  height: auto;
+  line-height: normal;
 }
 </style>
