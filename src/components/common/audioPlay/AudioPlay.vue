@@ -62,7 +62,8 @@
         class="songList">
         <p class="listTitle">播放列表</p>
         <div class="listDetail">
-          <span>{{getSongList.length}}首歌曲</span><span><i class="el-icon-delete"></i>清空</span>
+          <span>{{getSongList.length}}首歌曲</span>
+          <span @click="clearSongs" class="clearSongs" title="清空"><i class="el-icon-delete"></i>清空</span>
         </div>
         <div v-if="getSongList.length > 0">
           <div v-for="(item,index) in getSongList" 
@@ -230,6 +231,13 @@ export default {
       }else{
         this.$store.state.currentIndex += 1
       }
+    },
+    //清空歌曲
+    clearSongs(){
+      this.isPlay = false
+      this.$store.state.localSongList = []
+      this.$store.state.currentIndex = -1
+      this.$refs.audio.load();
     }
   },
   filters: {
@@ -384,6 +392,9 @@ export default {
   justify-content: space-between;
   flex-wrap: nowrap;
   margin: 10px 25px 20px;
+}
+.clearSongs:hover{
+  cursor: pointer;
 }
 .songList .listContainer{
   padding: 10px 25px;

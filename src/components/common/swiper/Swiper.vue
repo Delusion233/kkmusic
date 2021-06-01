@@ -1,7 +1,7 @@
 <template>
   <div class="swiper">
     <el-carousel :interval="4000" type="card" height="250px">
-      <el-carousel-item v-for="item in banners" :key="item.encodeId">
+      <el-carousel-item v-for="(item,index) in banners" :key="new Date().getTime()+index">
         <img :src="item.imageUrl" alt="" class="img" @click="clickBan(item.encodeId)">
       </el-carousel-item>
     </el-carousel>
