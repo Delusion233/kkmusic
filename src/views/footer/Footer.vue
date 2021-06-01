@@ -49,11 +49,11 @@ export default {
           this.getSongId = id
           //3.获取歌曲详情
           getSongDetail(id).then(res=>{
-            // console.log(res.songs[0]);
+            console.log(res.songs[0]);
             // if(res.songs.length > 0){
               const songMsg = res.songs[0];
               songDetail.songId = id;//歌曲id
-              songDetail.name = songMsg.al.name//歌曲名字
+              songDetail.name = songMsg.name//歌曲名字
               songDetail.picUrl = songMsg.al.picUrl//歌曲图片
               songDetail.dt = songMsg.dt//歌曲时长
               let newAr = [];
