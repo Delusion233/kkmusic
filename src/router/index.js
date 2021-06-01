@@ -15,6 +15,7 @@ const myVideo = () => import ('views/data/myVideo/MyVideo') ;
 const myFriends = () => import ('views/data/myFriends/MyFriends') ;
 const myLives = () => import ('views/data/myLives/MyLives') ;
 const mySelf = () => import ('views/data/mySelf/MySelf') ;
+const search = () => import ('views/searchResult/SearchResult') ;
 
 const routes = [
   {
@@ -49,6 +50,10 @@ const routes = [
     path: '/myself',
     component: mySelf
   },
+  {
+    path: '/search',
+    component: search
+  }
 ]
 
 const router = new VueRouter({

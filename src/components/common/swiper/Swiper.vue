@@ -1,6 +1,6 @@
 <template>
   <div class="swiper">
-    <el-carousel :interval="4000" type="card" height="250px">
+    <el-carousel :interval="4000" type="card" height="230px">
       <el-carousel-item v-for="(item,index) in banners" :key="new Date().getTime()+index">
         <img :src="item.imageUrl" alt="" class="img" @click="clickBan(item.encodeId)">
       </el-carousel-item>
@@ -25,7 +25,7 @@ export default {
 <style scoped>
 .swiper .img{
   width: 100%;
-  min-height: 250px;
+  min-height: 200px;
   border-radius: 10px;
 }
 </style>

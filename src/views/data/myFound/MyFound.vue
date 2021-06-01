@@ -40,6 +40,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.myFound{
+  padding: 10px 50px;
+}
 </style>

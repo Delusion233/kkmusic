@@ -8,7 +8,8 @@
       @focus="focusInput()"
       @blur="blurInput()"
       maxlength="10"
-      v-model="input">
+      v-model="input"
+      @keyup.enter.native="search">
     </el-input>
   </div>
 </template>
@@ -18,7 +19,8 @@ export default {
   data () {
     return {
       placeholder:'搜索',
-      input:''
+      input:'',
+      oldInput:''
     }
   },
   methods: {
@@ -29,6 +31,18 @@ export default {
     //input失去焦点
     blurInput(){
       this.placeholder = '搜索'
+    },
+    //用户按下enter键搜索
+    search(){
+      if(this.oldInput !== this.input){
+        this.oldInput = this.input
+        this.$router.push({
+          path:'/search',
+          query:{
+            txt:this.input
+          }
+        });
+      }
     }
   }
 }

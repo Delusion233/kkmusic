@@ -13,8 +13,7 @@ export default {
 <style scoped>
 .main{
   float: right;
-  width: calc(100% - 220px - 100px);
-  height: 530px;
-  padding: 10px 50px;
+  width: calc(100% - 220px);
+  height: 550px;
 }
 </style>
