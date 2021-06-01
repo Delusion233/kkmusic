@@ -34,7 +34,7 @@ export default {
     },
     //用户按下enter键搜索
     search(){
-      if(this.oldInput !== this.input){
+      if(this.oldInput !== this.input && this.input !== ''){
         this.oldInput = this.input
         this.$router.push({
           path:'/search',

@@ -190,6 +190,10 @@ export default {
           this.$refs.audio.play();
           this.isPlay = true
         }
+      //播放完成后按播放按钮播放第一首歌
+      }else if(this.getSongList.length > 0 && Object.keys(this.getSongDetail).length===0){
+        this.$store.state.currentIndex = 0;
+        this.isPlay = true
       }else{
         console.log('没有音频');
       }
