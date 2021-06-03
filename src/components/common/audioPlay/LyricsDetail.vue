@@ -150,12 +150,6 @@ export default {
   color: #5d5d5d;
   margin-top: 50px;
 }
-.lyricObj{
-  /* position: absolute;
-  top: 0;
-  left: 0;
-  right: 0; */
-}
 .row{
   margin-top: 15px;
 }
