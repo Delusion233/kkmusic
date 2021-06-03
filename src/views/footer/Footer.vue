@@ -61,13 +61,13 @@ export default {
               songMsg.ar.map(res=>{ newAr.push(res.name)})
               songDetail.ar = newAr.join('/')//歌曲演唱者
               //将歌曲信息存到vuex中
-              let i = 0;
+              let i = 0;//判断列表中是否已存在，存在则直接播放对应歌曲
               const ishas = this.songList.some((item,index)=>{
                 i = index
                 return item.songId === id 
               })
               // console.log(i);
-              //存在歌曲,则播放对应歌曲
+              //列表存在歌曲,则播放对应歌曲
               if (ishas) {
                 this.$store.state.currentIndex = i
               //不存在则添加到列表
@@ -77,7 +77,7 @@ export default {
             // }
           })
         }else{
-          console.log('没有歌曲');
+          console.log('专辑页面');
         }
       })
     }

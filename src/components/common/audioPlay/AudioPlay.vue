@@ -3,12 +3,16 @@
     <div class="songDetail">
       <div class="imgBox">
         <img :src="getSongDetail.picUrl||require('assets/image/bg/fly.jpg')" alt="">
+        <i class="el-icon-full-screen" 
+        title="展开音乐详情页" 
+        v-show="getSongDetail.songUrl"
+        @click="showSongDetail()"></i>
       </div>
       <div class="songDetailBox">
         <div class="songNameBox">
           <p>
-            <span class="songName">{{getSongDetail.name||'让生活充满音乐'}}</span>
-            <span class="songerName">{{getSongDetail.ar?' - ':''}}{{getSongDetail.ar||''}}</span>
+            <span class="songName" :title="getSongDetail.name?getSongDetail.name:''">{{getSongDetail.name||'让生活充满音乐'}}</span>
+            <span class="songerName" :title="getSongDetail.ar?getSongDetail.ar:''">{{getSongDetail.ar?' - ':''}}{{getSongDetail.ar||''}}</span>
           </p>
         </div>
         <div class="songTools">
@@ -17,6 +21,9 @@
           <i class="el-icon-share" title="分享"></i>
         </div>
       </div>
+    </div>
+    <div class="showSongDetailBox" :class="showSongDetailBox2">
+      <lyricsDetail :getSongDetail="getSongDetail" :getCurrentTime="getCurrentTime"/>
     </div>
     <div class="songControl">
       <div class="controlTools">
@@ -88,6 +95,7 @@
 <script>
 import { getTime } from 'common/util'
 import { mapState,mapGetters } from 'vuex'
+import lyricsDetail from './LyricsDetail'
 
 export default {
   data () {
@@ -103,8 +111,14 @@ export default {
       maxDuration:'0.00',
       isOpenSongList:false,
       drawer: false,
-      clickIndex:-1
+      clickIndex:-1,
+      isshowSongDetail:false,
+      showSongDetailBox2:'',
+      getCurrentTime:0
     }
+  },
+  components: {
+    lyricsDetail
   },
   props: {
     getSongDetail:{
@@ -139,6 +153,7 @@ export default {
     },
     //播放音频时获取当前播放时长(一直)
     updateTime(nowLength){
+      this.getCurrentTime = nowLength.target.currentTime.toFixed(1)-0;
       const time = parseInt(nowLength.target.currentTime);
       this.nowLength = time;
       this.nowDuration = getTime(time);
@@ -152,6 +167,7 @@ export default {
           this.maxDuration = '0.00'
           this.nowLength = 0
           this.$store.state.currentIndex = -1
+          this.showSongDetailBox2 = ''
           console.log('最后一首');
         //下一首
         }else{
@@ -241,13 +257,29 @@ export default {
       this.isPlay = false
       this.$store.state.localSongList = []
       this.$store.state.currentIndex = -1
+      this.showSongDetailBox2 = ''
       this.$refs.audio.load();
+    },
+    //展示歌曲详情页
+    showSongDetail(){
+      this.isshowSongDetail = !this.isshowSongDetail;
+      if (this.isshowSongDetail) {
+        this.showSongDetailBox2 = 'showSongDetailBox2'
+      }else{
+        this.showSongDetailBox2 = ''
+      }
     }
   },
   filters: {
     //处理时长
     getDuration(time){
       return getTime(Math.floor(time/1000))
+    }
+  },
+  watch: {
+    //路径改变时关闭歌词详情
+    '$route':function() {
+      this.showSongDetailBox2 = ''
     }
   }
 }
@@ -270,11 +302,30 @@ export default {
   width: 50px;
   height: 50px;
   overflow: hidden;
+  position: relative;
 }
 .imgBox img{
   width: 50px;
   max-height: 50px;
   border-radius: 5px;
+}
+.imgBox i{
+  transition: .3s ease all;
+  font-size: 0px;
+}
+.imgBox:hover i{
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  font-size: 50px;
+  color: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9;
+  background-color: rgba(0,0,0,.5);
+  filter: 50%;
+  opacity: 60%;
 }
 .songDetailBox{
   padding-left: 10px;
@@ -305,6 +356,24 @@ export default {
 .songDetailBox .songerName{
   color: rgba(0,0,0,.5);
   font-size: 12px;
+}
+.showSongDetailBox{
+  position: absolute;
+  width: 100%;
+  height: calc(100% - 70px);
+  bottom: 70px;
+  left: 0;
+  background-color: #FF7878;
+  transform: scale(0,0);
+  transition: transform 0.2s;
+  transform-origin: bottom left;
+  overflow: hidden;
+  z-index: 9;
+}
+.showSongDetailBox2{
+  transform: scale(1,1);
+  transition: transform 0.2s;
+  transform-origin: bottom left;
 }
 .songTools{
   color: rgba(0,0,0,.5);
