@@ -37,11 +37,11 @@ export function  getSongList(limit=10) {
 }
 
 /** newsong list */
-export function getNewSongList(limit = 10) {
+export function getPlayList(id) {
   return request({
-    url: "/personalized/newsongs",
+    url: "/playlist/detail",
     params: {
-      limit
+      id
     }
   })
 }

@@ -15,16 +15,65 @@
           <el-dropdown-item icon="el-icon-orange">退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <span v-else class="hover1">登录</span>
+      <span v-else class="hover1" @click="isOpen = true">登录</span>
+    </div>
+    <div class="loginBox" v-show="isOpen">
+      <p class="close" title="关闭" @click="isOpen = false"></p>
+      <input class="input" type="text" 
+      placeholder="请输入手机号" v-model="input">
+      <br><input class="input" type="password" 
+      placeholder="请输入密码" v-model="password" @keyup.enter="submit">
+      <br><input class="btn" type="submit" value="登录" @click="submit">
+      <br><a href="#">注册</a>
+      <p class="agree">
+        <input id="color-input-red" 
+        class="chat-button-location-radio-input" 
+        type="checkbox" name="color-input-red"
+        value="#f0544d"
+        v-model="checked">
+        <label for="color-input-red"></label>
+        同意<span>《服务条款》《隐私政策》</span>
+      </p>
     </div>
   </div>
 </template>
 
 <script>
+import { getLogin } from 'network/base/header'
 export default {
   data () {
     return {
-      isLogin:true
+      isLogin:false,
+      isOpen:false,
+      input:'',
+      password:'',
+      checked:false
+    }
+  },
+  methods: {
+    submit(){
+      if (!this.checked) {
+        this.$toast.show('请勾选同意条款',1500);
+      }else if (this.input === '' || this.password === '') {
+        this.$toast.show('请输入账号或者密码',1500);
+      }else if(!this.isPhoneNum(this.input)){
+        this.$toast.show('请输入正确的手机号码',1500);
+      }else{
+        this.getLogin();
+      }
+    },
+    getLogin(){
+      getLogin(this.input,this.password).then(res=>{
+        console.log(res);
+        if (res.code===200) {
+          this.$toast.show('登录成功',1500);
+        }else{
+          this.$toast.show('登录失败',1500);
+        }
+      })
+    },
+    isPhoneNum(phone) {
+      return /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/.test(phone)
     }
   }
 }
@@ -58,6 +107,113 @@ export default {
 hr{
   margin: 5px 0;
 }
+.loginBox{
+  width: 400px;
+  height: 400px;
+  background-color: #FFF;
+  box-shadow: 0 0 10px #ccc;
+  position: fixed;
+  top: 55%;
+  margin-top: -300px;
+  margin-left: -200px;
+  left: 50%;
+  right: 50%;
+  z-index: 9;
+  padding-top: 100px;
+}
+.close{
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  color: #000;
+  font-size: 15px;
+}
+.close::before{
+  display: block;
+  content:"\2718";
+  width: 20px;
+  height: 20px;
+  color: #000;
+}
+.agree{
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  color: #666;
+  font-size: 13px;
+}
+.agree>span{
+  color: rgba(86,86,206,1);
+  cursor: pointer;
+}
+input[type=checkbox]{
+	visibility: hidden;
+}
+#color-input-red +label{
+  display: block;
+  width: 12px;
+  height: 12px;
+  cursor: pointer;
+  position: absolute;
+  top: 1px;
+  left: 100px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+#color-input-red:checked{
+  border: 10px;
+}
+#color-input-red:checked +label::before{
+  display: block;
+  content: "\2714";
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  text-align: center;
+  font-size: 12px;
+  color: white;
+  background: #FF7878;
+  border: 1px solid #FF7878;
+  position: absolute;
+  left: -1px;
+  top: -1px;
+  line-height: 13px;
+}
+.close:hover{
+  cursor: pointer;
+}
+.btn{
+  width: 250px;
+  height: 46px;
+  border: 0px;
+  color: #fff;
+  background-color: #FF7878;
+  margin: 20px 0 10px 0;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: .5s ease background-color;
+  box-shadow: 0 0 10px #eee;
+}
+.btn:hover,.btn:active{
+  background-color: rgb(197, 94, 94);
+}
+.input{
+  width: 210px;
+  height: 40px;
+  border: 0px;
+  color: #FF7878;
+  box-shadow: 0 0 10px #eee;
+  margin-top: 10px;
+  border: 0;
+  outline: none;
+  background-color: rgba(0, 0, 0, 0);
+  padding: 0 20px;
+}
+::-webkit-input-placeholder { color:#999; }
+::-moz-placeholder { color:#999; } /* firefox 19+ */
+:-ms-input-placeholder { color:#999; } /* ie */
+input:-moz-placeholder { color:#999; }
 </style>
 <style>
 .el-dropdown{

@@ -4,7 +4,9 @@
     v-for="item in tabContent"
     :key="item.name"
     :label="item.label"
-    :name="item.name">
+    :name="item.name"
+    :class="{'is-active':$route.path===item.name}">
+      <slot :name="item.name"/>
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -13,20 +15,25 @@
 export default {
   data() {
     return {
-      name:this.$route.path,
-      currenTab:''
+      name:this.activeName
+    }
+  },
+  watch: {
+    activeName() {
+      this.name = this.activeName
     }
   },
   methods: {
     handleClick(tab) {
-      if(this.currenTab !== tab.label){
+      if(this.$route.path !== this.name){
         this.currenTab = tab.label
         this.$emit('handleClick',tab);
       }
     }
   },
   props: {
-    tabContent:Array
+    tabContent:Array,
+    activeName:String
   }
 }
 </script>

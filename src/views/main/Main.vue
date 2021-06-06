@@ -14,6 +14,7 @@ export default {
 .main{
   float: right;
   width: calc(100% - 220px);
-  height: 550px;
+  height: 600px;
+  overflow-y: auto;
 }
 </style>

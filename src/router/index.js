@@ -15,7 +15,8 @@ const myVideo = () => import ('views/data/myVideo/MyVideo') ;
 const myFriends = () => import ('views/data/myFriends/MyFriends') ;
 const myLives = () => import ('views/data/myLives/MyLives') ;
 const mySelf = () => import ('views/data/mySelf/MySelf') ;
-const search = () => import ('views/searchResult/SearchResult') ;
+const searchResult = () => import ('views/searchResult/SearchResult') ;
+const playListResult = () => import ('views/searchResult/PlayListResult') ;
 
 const routes = [
   {
@@ -52,7 +53,11 @@ const routes = [
   },
   {
     path: '/search',
-    component: search
+    component: searchResult
+  },
+  {
+    path: '/playList',
+    component: playListResult
   }
 ]
 

@@ -1,7 +1,9 @@
 <template>
   <div class="myFound">
     <tabControl :tabContent="tabContent" :activeName="activeName" @handleClick="handleClick"/>
-    <router-view/>
+    <keep-alive>
+      <router-view/>
+    </keep-alive>
   </div>
 </template>
 
@@ -19,7 +21,7 @@ export default {
         { label: "歌手", name: "/found/kksinger" },
         { label: "最新音乐", name: "/found/kknewsongs" },
       ],
-      activeName:'/found/kkstyle'
+      activeName:this.$route.path
     }
   },
   components: {
@@ -27,8 +29,13 @@ export default {
   },
   created () {
   },
+  watch: {
+    '$route':function() {
+      this.activeName = this.$route.path
+    }
+  },
   methods: {
-    //tabControl传过来的点击事件
+    // tabControl传过来的点击事件
     handleClick(tab){
       // console.log(tab);
       //设置活跃tab

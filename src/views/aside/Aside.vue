@@ -91,7 +91,7 @@ export default {
 .aside{
   float: left;
   width: 200px;
-  height: 530px;
+  height: 580px;
   padding: 10px;
   text-align: left;
   overflow: hidden;

@@ -12,3 +12,17 @@ export function getTime(time){
 
   return hour + minutes + ":" + second
 }
+
+//获取年月日
+export function getDate(time) {
+  const date = new Date(time);
+  let year = date.getFullYear()
+  let month = date.getMonth()+1
+  let day = date.getDate()
+
+  month < 10 ? month = "0" + month : month = month;
+
+  day < 10 ? day = "0" + day : day = day;
+
+  return year + "-" + month + "-" + day
+}

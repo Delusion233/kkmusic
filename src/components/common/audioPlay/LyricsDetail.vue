@@ -50,7 +50,10 @@ export default {
       getLyric(this.songId).then(res=>{
         // this.lyric = res.lrc.lyric
         // console.log(res.lrc.lyric);
-        let arr = res.lrc.lyric.split("\n");
+        let arr = []
+        if (res) {
+          arr = res.lrc.lyric.split("\n");
+        }
         // console.log(arr);
         let lyricArr = []
         for (var i = 0; i < arr.length-1; i++) {
@@ -89,7 +92,7 @@ export default {
     getCurrentTime(){
       // console.log(this.getCurrentTime);
       
-      if (this.lyricIndex >= 0) {
+      if (this.lyricIndex > 0) {
         let lyricOffsetTop = this.$refs.lyric[this.lyricIndex].offsetTop-300;
         this.$refs.contanier.scrollTop = lyricOffsetTop
         // this.$refs.contanier.animate({

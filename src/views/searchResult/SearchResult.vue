@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { getSearchResult } from 'network/base/search'
+import { getSearchResult } from 'network/base/header'
 import { getTime } from 'common/util'
 
 export default {
