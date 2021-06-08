@@ -26,3 +26,30 @@ export function getDate(time) {
 
   return year + "-" + month + "-" + day
 }
+
+//操作storage
+export function setItem(key, value) {
+  let storage = window.localStorage.getItem(key);
+
+  if (!storage) {
+    storage = {}
+  }else{
+    storage = JSON.parse(storage);
+  }
+  
+  storage[key] = value
+  window.localStorage.setItem(key, JSON.stringify(storage))
+}
+
+export function getItem(key, def) {
+  let storage = window.localStorage.getItem(key);
+
+  if (!storage) {
+    console.log('没有登录');
+    return def;
+  }else{
+    storage = JSON.parse(storage);
+    // console.log(storage[key]);
+    return storage[key];
+  }
+}

@@ -1,18 +1,22 @@
 <template>
   <div class="login">
-    <img src="~assets/image/bg/fly.jpg" alt="">
+    <img :src="avatarUrl||require('assets/image/bg/fly.jpg')" alt="">
     <div class="loginText">
-      <el-dropdown v-if="isLogin" trigger="click">
+      <el-dropdown v-if="isLogin" trigger="click"  @command="handleCommand">
         <span class="el-dropdown-link hover1">
-          kk.<i class="el-icon-arrow-down el-icon--right"></i>
+          {{nickname}}<i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown" class="dropdownMenu">
-          <el-dropdown-item icon="el-icon-grape">会员中心<i class="el-icon-arrow-right"></i></el-dropdown-item>
-          <el-dropdown-item icon="el-icon-watermelon">等级<i class="el-icon-arrow-right"></i></el-dropdown-item>
-          <el-dropdown-item icon="el-icon-apple">商城<i class="el-icon-arrow-right"></i></el-dropdown-item>
-          <el-dropdown-item icon="el-icon-pear">个人信息<i class="el-icon-arrow-right"></i></el-dropdown-item>
+          <el-dropdown-item command="vvvip" icon="el-icon-grape">会员中心<i class="el-icon-arrow-right"></i>
+          </el-dropdown-item>
+          <el-dropdown-item command="grade" icon="el-icon-watermelon">等级<i class="el-icon-arrow-right"></i>
+          </el-dropdown-item>
+          <el-dropdown-item command="shop" icon="el-icon-apple">商城<i class="el-icon-arrow-right"></i>
+          </el-dropdown-item>
+          <el-dropdown-item command="message" icon="el-icon-pear">个人信息<i class="el-icon-arrow-right"></i>
+          </el-dropdown-item>
           <hr>
-          <el-dropdown-item icon="el-icon-orange">退出登录</el-dropdown-item>
+          <el-dropdown-item command="logout" icon="el-icon-orange">退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
       <span v-else class="hover1" @click="isOpen = true">登录</span>
@@ -39,18 +43,30 @@
 </template>
 
 <script>
-import { getLogin } from 'network/base/header'
+import { getLogin, logout } from 'network/base/header'
+import { setItem, getItem } from 'common/util'
 export default {
   data () {
     return {
+      avatarUrl:'',
+      nickname:'',
       isLogin:false,
       isOpen:false,
-      input:'',
-      password:'',
+      input:'18122467454',
+      password:'jin123JINN',
       checked:false
     }
   },
+  inject: ['reload'],
+  created () {
+    if (getItem('login')) {
+      this.isLogin = true
+      this.avatarUrl = getItem('login').avatarUrl
+      this.nickname = getItem('login').nickname
+    }
+  },
   methods: {
+    //登录
     submit(){
       if (!this.checked) {
         this.$toast.show('请勾选同意条款',1500);
@@ -62,18 +78,54 @@ export default {
         this.getLogin();
       }
     },
+    //登录接口
     getLogin(){
       getLogin(this.input,this.password).then(res=>{
         console.log(res);
         if (res.code===200) {
-          this.$toast.show('登录成功',1500);
+          this.isOpen = false
+          this.isLogin = true
+          // this.$toast.show('登录成功',1500);
+          this.avatarUrl = res.profile.avatarUrl
+          this.nickname = res.profile.nickname
+          setItem('login',{
+            userId:res.profile.userId,
+            avatarUrl:res.profile.avatarUrl,
+            nickname:res.profile.nickname
+          })
+          //刷新页面
+          this.reload();
         }else{
           this.$toast.show('登录失败',1500);
         }
       })
     },
+    //登出接口
+    logout(){
+      logout().then(res=>{
+        if (res.code===200) {
+          this.$toast.show('退出成功',1500);
+          //清除信息
+          window.localStorage.removeItem('login');
+          //跳回至首页
+          this.$router.replace('/');
+          //刷新页面
+          this.reload();
+        }
+      })
+    },
     isPhoneNum(phone) {
       return /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/.test(phone)
+    },
+    //下拉菜单监听
+    handleCommand(command){
+      switch (command) {
+        case 'vvvip': console.log('会员中心'); break;
+        case 'grade': console.log('等级'); break;
+        case 'shop': console.log('商城'); break;
+        case 'message': console.log('个人信息'); break;
+        case 'logout': this.logout(); break;
+      }
     }
   }
 }

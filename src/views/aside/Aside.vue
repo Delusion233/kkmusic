@@ -22,12 +22,12 @@
           <el-menu-item-group>
             <el-menu-item
               :index="'1-'+index"
-              v-for="(item,index) in myMusic"
-              :key="item.i"
+              v-for="(item,index) in myCreate"
+              :key="new Date().getTime()+item.id"
               @click="myCreateChose(index)"
               :class="{'isChoose2':myCreateIndex===index}">
-              <i :class="item.i"></i>
-              <span class="txt">{{item.txt}}</span>
+              <i :class="item.icon"></i>
+              <span class="txt">{{item.name}}</span>
             </el-menu-item>
           </el-menu-item-group>
         </el-submenu>
@@ -37,6 +37,8 @@
 </template>
 
 <script>
+import { getPlayList } from 'network/base/user'
+import { getItem } from 'common/util'
 export default {
   name:'Asider',
   data () {
@@ -58,7 +60,14 @@ export default {
       myCreate:[],
       myBaseIndex:0,
       myMusicIndex:-1,
-      myCreateIndex:-1
+      myCreateIndex:-1,
+      userId:''
+    }
+  },
+  created () {
+    if (getItem('login')) {
+      this.userId = getItem('login').userId
+      this.getPlayList();
     }
   },
   methods: {
@@ -77,6 +86,31 @@ export default {
       this.myBaseIndex = -1;
       this.myMusicIndex = -1;
       this.myCreateIndex = index;
+      this.$router.push({
+        path:'/playList',
+        query:{
+          id:this.myCreate[index].id
+        }
+      })
+    },
+    //获取用户歌单接口
+    getPlayList(){
+      getPlayList(this.userId).then(res=>{
+        console.log(res.playlist);
+        if (res.code===200) {
+          res.playlist.forEach((v,index) => {
+            let obj = {}
+            obj.icon = 'el-icon-ice-cream-round'
+            obj.id = v.id
+            if (index===0) {
+              obj.name = '我喜欢的音乐'
+            }else{
+              obj.name = v.name
+            }
+            this.myCreate.push(obj);
+          });
+        }
+      })
     }
   },
   filters: {
@@ -117,6 +151,9 @@ export default {
 .txt{
   padding-left: 10px;
 }
+.txt:hover{
+  cursor: pointer;
+}
 .title{
   color: rgba(0,0,0,.3);
   font-size: 14px;
@@ -156,6 +193,8 @@ export default {
   line-height: normal!important;
   min-width: 0px!important;
   margin-top: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .el-menu-item:focus, .el-menu-item:hover {
   outline: 0!important;

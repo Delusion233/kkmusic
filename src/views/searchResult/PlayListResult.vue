@@ -67,6 +67,13 @@ export default {
   components: {
     tabControl
   },
+  inject:['routerRefresh'],
+  watch: {
+    '$route':function () {
+      // console.log('变化了');
+      this.routerRefresh();
+    }
+  },
   created () {
     //接收歌单id
     this.playListId = this.$route.query.id;

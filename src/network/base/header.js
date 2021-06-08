@@ -24,3 +24,13 @@ export function getLogin(phone, password, timestamp=new Date().getTime()) {
     }
   })
 }
+
+/** logout */
+export function logout(timestamp = new Date().getTime()) {
+  return request({
+    url: "/logout",
+    params:{
+      timestamp
+    }
+  })
+}

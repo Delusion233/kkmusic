@@ -1,6 +1,6 @@
 <template>
   <div id="app" onselectstart="return false">
-    <Home/>
+    <Home v-if="isRouterAlive"/>
   </div>
 </template>
 
@@ -10,6 +10,25 @@ export default {
   name: 'App',
   components: {
     Home
+  },
+  provide(){
+    return{
+      reload: this.reload
+    }
+  },
+  data () {
+    return {
+      isRouterAlive: true
+    }
+  },
+  methods: {
+    //重载页面===刷新页面(部分刷新,不会影响整个网页)
+    reload(){
+      this.isRouterAlive = false
+      this.$nextTick(()=>{
+        this.isRouterAlive = true
+      })
+    }
   }
 }
 </script>
