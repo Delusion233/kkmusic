@@ -96,7 +96,7 @@ export default {
     //获取用户歌单接口
     getPlayList(){
       getPlayList(this.userId).then(res=>{
-        console.log(res.playlist);
+        // console.log(res.playlist);
         if (res.code===200) {
           res.playlist.forEach((v,index) => {
             let obj = {}

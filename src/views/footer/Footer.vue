@@ -39,8 +39,8 @@ export default {
     getSongUrl(id){
       //1.获取歌曲播放地址
       getSongUrl(id).then(res=>{
-        // console.log(res.data[0]);
         const data = res.data[0];
+        console.log(data);
         let songDetail = {};
         songDetail.songUrl = data.url;//歌曲url
         //2.如果存在歌曲或者传过来的id不相同则 播放歌曲 和 获取歌曲详情
@@ -64,7 +64,7 @@ export default {
               let i = 0;//判断列表中是否已存在，存在则直接播放对应歌曲
               const ishas = this.songList.some((item,index)=>{
                 i = index
-                return item.songId === id 
+                return item.songId === id
               })
               // console.log(i);
               //列表存在歌曲,则播放对应歌曲

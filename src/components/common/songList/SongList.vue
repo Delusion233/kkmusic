@@ -4,6 +4,7 @@
     v-for="(item,index) in songList" 
     :key="new Date().getTime() + item.id"
     @mouseenter="hoverImg(index)"
+    @mouseout="outImg()"
     @click="emitId(item.id)">
       <img :src="item.picUrl" alt="">
       <p>{{item.name}}</p>
@@ -27,6 +28,9 @@ export default {
   methods: {
     hoverImg(index){
       this.currentIndex = index
+    },
+    outImg(){
+      this.currentIndex = -1;
     },
     emitId(songListId){
       this.$emit('getSongListId',songListId);
@@ -52,6 +56,7 @@ export default {
 }
 .songListItem img{
   width: 100%;
+  max-height: 165px;
   height: auto;
   border-radius: 5px;
 }

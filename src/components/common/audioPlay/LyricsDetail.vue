@@ -49,34 +49,37 @@ export default {
     getLyric(){
       getLyric(this.songId).then(res=>{
         // this.lyric = res.lrc.lyric
-        // console.log(res.lrc.lyric);
-        let arr = []
-        if (res) {
-          arr = res.lrc.lyric.split("\n");
+        if (res.lrc.lyric) {
+          let arr = []
+          if (res) {
+            arr = res.lrc.lyric.split("\n");
+          }
+          // console.log(arr);
+          let lyricArr = []
+          for (var i = 0; i < arr.length-1; i++) {
+            //分离时间
+            let newArr = arr[i].match(/\[(\d+:.+?)\]/g);
+            //分离歌词
+            let index = arr[i].lastIndexOf(']');
+            let newLyric = arr[i].substring(index+1,arr[i].length);
+            //如有多个时间则添加多次
+            newArr.forEach(res=>{
+              let main = {}
+              //时间数组
+              res = res.replace('[','');
+              res = res.replace(']','');
+              res = (res.split(':')[0]*60+(res.split(':')[1]-0)).toFixed(1);
+              main.time = res;
+              //歌词数组
+              main.lyric = newLyric;
+              //添加到总的数组
+              lyricArr.push(main)
+            })
+          }
+          this.lyric = lyricArr.sort((a,b)=>{return a.time - b.time;})
+        }else{
+          this.lyric = ['暂无歌词']
         }
-        // console.log(arr);
-        let lyricArr = []
-        for (var i = 0; i < arr.length-1; i++) {
-          //分离时间
-          let newArr = arr[i].match(/\[(\d+:.+?)\]/g);
-          //分离歌词
-          let index = arr[i].lastIndexOf(']');
-          let newLyric = arr[i].substring(index+1,arr[i].length);
-          //如有多个时间则添加多次
-          newArr.forEach(res=>{
-            let main = {}
-            //时间数组
-            res = res.replace('[','');
-            res = res.replace(']','');
-            res = (res.split(':')[0]*60+(res.split(':')[1]-0)).toFixed(1);
-            main.time = res;
-            //歌词数组
-            main.lyric = newLyric;
-            //添加到总的数组
-            lyricArr.push(main)
-          })
-        }
-        this.lyric = lyricArr.sort((a,b)=>{return a.time - b.time;})
       })
     }
   },

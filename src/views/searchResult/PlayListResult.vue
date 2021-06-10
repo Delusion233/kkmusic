@@ -11,7 +11,8 @@
           <span>{{playListResult.nickname}}</span><span>{{playListResult.createTime}}创建</span>
         </div>
         <div class="btn">
-          <el-button type="danger" icon="el-icon-caret-right" title="播放全部" round>播放全部</el-button>
+          <el-button type="danger" icon="el-icon-caret-right" 
+          title="播放全部" @click="playAll" round>播放全部</el-button>
           <el-button type="danger" icon="el-icon-star-off" title="收藏" round>收藏</el-button>
         </div>
         <div class="describe">
@@ -128,6 +129,39 @@ export default {
     playSong(row){
       //发送id
       this.$bus.$emit('getSongId',row.songId);
+    },
+    //播放全部按钮
+    playAll(){
+    //   let index;
+    //   //原数组长度
+    //   if (this.$store.state.currentIndex === -1) {
+    //     index = 0
+    //   }else{
+    //     index = this.$store.state.localSongList.length-1
+    //   }
+    //   let newPlaylist = []
+    //   this.playListResult.tracks.forEach(v => {
+    //     let obj = {}
+    //     obj.ar = v.sr//歌手
+    //     obj.dt = v.dt//时长
+    //     obj.name = v.name//歌曲名字
+    //     obj.songId = v.songId//歌曲id
+    //     obj.al = v.al//专辑
+    //     newPlaylist.push(obj)
+    //   });
+    //   console.log(newPlaylist);
+    //   if (this.$store.state.currentIndex >= 0) {
+    //     this.$store.state.localSongList.splice(this.$store.state.currentIndex,0,newPlaylist);
+    //     console.log('添加到当前位置');
+    //   }else{
+    //     console.log('添加到最后');
+    //     let newArr = this.$store.state.localSongList.concat(newPlaylist)
+    //     this.$store.state.localSongList = newArr
+    //   }
+    //   //设置当前播放index
+    //   // this.$store.state.currentIndex = index
+    //   //发送id播放歌曲
+    //   this.$bus.$emit('getSongId',newPlaylist[0].songId)
     }
   }
 }
