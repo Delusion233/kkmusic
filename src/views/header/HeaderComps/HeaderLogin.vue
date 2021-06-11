@@ -53,7 +53,7 @@ export default {
       isLogin:false,
       isOpen:false,
       input:'18122467454',
-      password:'jin123JINN',
+      password:'',
       checked:false
     }
   },
