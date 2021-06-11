@@ -6,7 +6,7 @@
     @mouseenter="hoverImg(index)"
     @mouseout="outImg()"
     @click="emitId(item.id)">
-      <img :src="item.picUrl" alt="">
+      <img :src="item.picUrl||item.coverImgUrl" alt="">
       <p>{{item.name}}</p>
       <img src="~assets/image/main/play.png" v-show="currentIndex===index" class="playImg" alt="">
     </div>
@@ -56,7 +56,6 @@ export default {
 }
 .songListItem img{
   width: 100%;
-  max-height: 165px;
   height: auto;
   border-radius: 5px;
 }

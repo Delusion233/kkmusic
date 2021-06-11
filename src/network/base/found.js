@@ -45,3 +45,21 @@ export function getPlayList(id) {
     }
   })
 }
+
+/** song list category */
+export function getSongListCategory() {
+  return request({
+    url: "/playlist/hot"
+  })
+}
+
+/** highquality song list */
+export function getHighqualitySongList(cat='全部', limit=13) {
+  return request({
+    url: "/top/playlist/highquality",
+    params: {
+      cat,
+      limit
+    }
+  })
+}
