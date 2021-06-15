@@ -8,6 +8,7 @@
     @click="emitId(item.id)">
       <img :src="item.picUrl||item.coverImgUrl" alt="">
       <p>{{item.name}}</p>
+      <div class="playCount">{{item.playCount > 10000 ? (item.playCount/10000).toFixed(0)+'万' : item.playCount}}</div>
       <img src="~assets/image/main/play.png" v-show="currentIndex===index" class="playImg" alt="">
     </div>
   </div>
@@ -48,9 +49,8 @@ export default {
 .songListItem{
   text-align: left;
   position: relative;
-  transition: transform .5s ease;
 }
-.songListItem:hover{
+.songListItem img:hover{
   cursor: pointer;
   transform: translateY(-2px);
 }
@@ -58,6 +58,7 @@ export default {
   width: 100%;
   height: auto;
   border-radius: 5px;
+  transition: transform .5s ease;
 }
 .songListItem p{
   overflow: hidden;
@@ -77,5 +78,12 @@ export default {
   right: 10px;
   width: 40px;
   height: 40px;
+}
+.playCount{
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  font-size: 12px;
+  color: #fff;
 }
 </style>
