@@ -31,6 +31,9 @@ export default {
 .titleItem span{
   color: rgba(0,0,0,.7);
 }
+.titleItem i{
+  color: rgba(0,0,0,1);
+}
 .titleItem span:hover{
   cursor: pointer;
   color: rgba(0,0,0,1);

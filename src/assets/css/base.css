@@ -1,8 +1,9 @@
 @import "./normalize.css";
 
-p{
+p,span{
   margin: 0;
   padding: 0;
+  word-break: break-word!important;
 }
 .hover1{
   color: rgba(255, 255, 255, 0.7)!important;

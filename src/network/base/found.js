@@ -63,3 +63,21 @@ export function getHighqualitySongList(cat='全部', limit=13) {
     }
   })
 }
+
+/** personalized */
+export function getPersonalized() {
+  return request({
+    url: "/personalized/privatecontent"
+  })
+}
+
+/** personalized list */
+export function getPersonalizedList(limit = 20,offset=0) {
+  return request({
+    url: "/personalized/privatecontent/list",
+    params:{
+      limit,
+      offset
+    }
+  })
+}

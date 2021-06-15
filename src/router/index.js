@@ -12,9 +12,13 @@ const kkSinger = () => import('views/data/myFound/menu/KkSinger');
 const kkNewSongs = () => import('views/data/myFound/menu/KkNewSongs');
 
 const myVideo = () => import ('views/data/myVideo/MyVideo') ;
+const mvList = () => import('views/data/myVideo/MvList') ;
+const mvListResult = () => import ('views/searchResult/MvListResult') ;
+
 const myFriends = () => import ('views/data/myFriends/MyFriends') ;
 const myLives = () => import ('views/data/myLives/MyLives') ;
 const mySelf = () => import ('views/data/mySelf/MySelf') ;
+
 const searchResult = () => import ('views/searchResult/SearchResult') ;
 const playListResult = () => import ('views/searchResult/PlayListResult') ;
 
@@ -40,6 +44,10 @@ const routes = [
     component: myVideo
   },
   {
+    path: '/mvList',
+    component: mvList
+  },
+  {
     path: '/friends',
     component: myFriends
   },
@@ -58,6 +66,10 @@ const routes = [
   {
     path: '/playList',
     component: playListResult
+  },
+  {
+    path: '/mvListResult',
+    component: mvListResult
   }
 ]
 
