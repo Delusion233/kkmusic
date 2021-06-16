@@ -2,8 +2,8 @@
   <div class="topSongList">
     <div v-for="item in topSongList" :key="new Date().getTime()+item.id" class="list">
       <span>{{item.index}}</span>
-      <div class="image">
-        <img :src="item.picUrl" :alt="item.name" @click="sendSongId(item.id)">
+      <div class="image" @click="sendSongId(item.id)">
+        <img v-lazy="item.picUrl" :alt="item.name">
         <i class="el-icon-caret-right"></i>
       </div>
       <div class="detail">
@@ -30,9 +30,6 @@ export default {
 </script>
 
 <style scoped>
-.topSongList{
-
-}
 .list{
   display: flex;
   margin-top: 10px;
@@ -43,11 +40,14 @@ export default {
 .list span{
   margin-top: 25px;
   padding: 0 5px;
+  width: 40px;
 }
 .list img{
+  min-width: 70px;
+  min-height: 70px;
   width: 70px;
   border-radius: 5px;
-  margin: 0 15px;
+  margin-right: 15px;
 }
 .list img:hover{
   cursor: pointer;
@@ -56,7 +56,7 @@ export default {
   text-align: left;
   display: flex;
   align-items: center;
-  width: calc(100% - 130px);
+  width: calc(100% - 140px);
 }
 .detail p {
   text-overflow: ellipsis;
