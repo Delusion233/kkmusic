@@ -71,13 +71,34 @@ export function getPersonalized() {
   })
 }
 
-/** personalized list */
-export function getPersonalizedList(limit = 20,offset=0) {
+/** personalized new song list */
+export function getNewSongList(limit = 10) {
   return request({
-    url: "/personalized/privatecontent/list",
+    url: "/personalized/newsong",
     params:{
-      limit,
-      offset
+      limit
+    }
+  })
+}
+
+/** top song list */
+export function getTopSongList(type = 0) {
+  return request({
+    url: "/top/song",
+    params: {
+      type
+    }
+  })
+}
+
+/** top album list */
+export function getTopAlbumList(offset = 0, area = "ALL",limit = 20) {
+  return request({
+    url: "/top/album",
+    params: {
+      offset,
+      area,
+      limit
     }
   })
 }

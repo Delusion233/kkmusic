@@ -12,7 +12,7 @@ const kkSinger = () => import('views/data/myFound/menu/KkSinger');
 const kkNewSongs = () => import('views/data/myFound/menu/KkNewSongs');
 
 const myVideo = () => import ('views/data/myVideo/MyVideo') ;
-const mvList = () => import('views/data/myVideo/MvList') ;
+const mvList = () => import('views/data/myVideo/PersonalList') ;
 const mvListResult = () => import ('views/searchResult/MvListResult') ;
 
 const myFriends = () => import ('views/data/myFriends/MyFriends') ;

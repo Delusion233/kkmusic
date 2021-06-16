@@ -1,5 +1,5 @@
 <template>
-  <div class="mvList" v-if="Object.keys(mvList).length !== 0">
+  <div class="mvList">
     <div class="songListItem" :style="'width:'+ width" 
     v-for="(item,index) in mvList" 
     :key="new Date().getTime() + item.id"

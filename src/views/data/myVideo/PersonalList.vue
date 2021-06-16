@@ -7,7 +7,7 @@
 
 <script>
 import mvList from 'components/common/mvList/MvList'
-import { getPersonalizedList } from 'network/base/found'
+import { getPrivateContent } from 'network/base/mv'
 
 export default {
   data () {
@@ -19,13 +19,13 @@ export default {
     mvList
   },
   created () {
-    this.getPersonalizedList();
+    this.getPrivateContent();
   },
   methods: {
     //独家放送列表接口
-    getPersonalizedList(){
-      getPersonalizedList().then(res=>{
-        console.log(res);
+    getPrivateContent(){
+      getPrivateContent().then(res=>{
+        // console.log(res);
         this.mvList = res.result
       })
     },
